@@ -1,0 +1,56 @@
+{
+  "_comment": "Model Hub settings. Paths are relative to this file's parent folder (model-hub) unless absolute. See docs/ASSUMPTIONS.md for what the hardware numbers mean.",
+  "listen_host": "127.0.0.1",
+  "listen_port": 8099,
+  "llm_dir": "../llm",
+  "models_registry": "../llm/models.json",
+  "models_dir": "../llm/models",
+  "llama_server": "../llm/llama.cpp/llama-server.exe",
+  "logs_dir": "../llm/logs",
+  "turnstone": {
+    "console_url": "http://127.0.0.1:8090",
+    "token_file": "turnstone.token",
+    "wsl_distro": "Ubuntu-24.04",
+    "node_memory_limit_gb": 4,
+    "nodes": 1,
+    "stack_memory_gb": null
+  },
+  "hardware": {
+    "_comment": "null = auto-detect (recommended). Set a number only to override detection. See docs/ASSUMPTIONS.md.",
+    "gpu_dedicated_gb": null,
+    "gpu_shared_gb": null,
+    "gpu_reserve_gb": 2,
+    "windows_reserve_gb": 8,
+    "effective_bandwidth_gbps": null,
+    "bandwidth_efficiency": 0.45,
+    "discrete_vram_bandwidth_gbps": null,
+    "effective_tflops": 8,
+    "gpu_kind_override": null,
+    "plan": {
+      "_comment": "What-if RAM split for unified-memory PCs (set from the dashboard). When enabled, 'fit' uses this split instead of the current BIOS split. It does not change the PC: the split itself is set in the BIOS (UMA Frame Buffer Size).",
+      "enabled": false,
+      "gpu_reserved_gb": 16.0,
+      "shared_fraction": 0.5
+    }
+  },
+  "estimates": {
+    "default_ctx": 65536,
+    "default_parallel": 2,
+    "agent_turn_prompt_tokens": 6000,
+    "agent_turn_output_tokens": 800,
+    "kv_bytes_per_element": 2,
+    "runtime_overhead_gb": 1.5
+  },
+  "cache_ttl_seconds": {
+    "huggingface": 1800,
+    "github": 3600,
+    "system": 5
+  },
+  "downloads": {
+    "max_parallel": 1,
+    "allowed_extensions": [
+      ".gguf",
+      ".safetensors"
+    ]
+  }
+}

@@ -1,0 +1,426 @@
+<title>Turnstone Model Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single readable column (field-guide style) with wide tables and a two-column
+   feedback block; the turnstone's rufous leg colour is the one warm note against cool slate. */
+:root {
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --ink: #18202b;
+  --muted: #5a6573;
+  --line: #d9dee6;
+  --accent: #2f5bd3;
+  --accent-ink: #ffffff;
+  --rufous: #c25a24;
+  --ok: #1d7a46;
+  --warn: #9a6a12;
+  --code: #eaeef4;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #10141a; --surface: #171c24; --ink: #e5e9ef; --muted: #9aa5b3; --line: #2a313c;
+    --accent: #7d9cf2; --accent-ink: #0d1117; --rufous: #e58a52; --ok: #52c486; --warn: #e3b154; --code: #202733;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #10141a; --surface: #171c24; --ink: #e5e9ef; --muted: #9aa5b3; --line: #2a313c;
+  --accent: #7d9cf2; --accent-ink: #0d1117; --rufous: #e58a52; --ok: #52c486; --warn: #e3b154; --code: #202733;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.6 var(--body); }
+.wrap { max-width: 980px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 64px; display: grid; gap: 56px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 1.1rem; font-weight: 700; }
+p { margin: 0; max-width: 68ch; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--rufous); outline-offset: 2px; }
+code { font-family: var(--mono); font-size: 0.88em; background: var(--code); padding: 1px 6px; border-radius: 4px; }
+pre { font-family: var(--mono); font-size: 0.84rem; background: var(--code); border-radius: 8px; padding: 14px 16px; margin: 0; overflow-x: auto; line-height: 1.5; }
+.section { display: grid; gap: 16px; min-width: 0; }
+.eyebrow { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--rufous); }
+.muted { color: var(--muted); }
+.small { font-size: 0.875rem; }
+
+/* hero */
+.hero { display: grid; gap: 18px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.hero .lede { font-size: 1.2rem; color: var(--ink); max-width: 60ch; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge { font: 500 0.75rem/1 var(--mono); padding: 6px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--muted); }
+.badge b { color: var(--ink); font-weight: 500; }
+.notice { border-left: 3px solid var(--rufous); padding: 10px 14px; background: var(--surface); border-radius: 0 8px 8px 0; font-size: 0.95rem; max-width: 72ch; }
+
+/* feature list */
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px 28px; }
+.feature { display: grid; gap: 4px; min-width: 0; }
+.feature h3 { font-size: 1rem; }
+.feature p { color: var(--muted); font-size: 0.95rem; }
+
+/* diagram */
+.diagram { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+.diagram pre { background: none; }
+
+/* tables */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { font: 500 0.72rem/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td.name { font-weight: 600; white-space: nowrap; }
+.tag { display: inline-block; font: 500 0.72rem/1.4 var(--mono); padding: 1px 7px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; }
+.tag.ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 45%, transparent); }
+.tag.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 45%, transparent); }
+.tag.hi { color: var(--rufous); border-color: color-mix(in srgb, var(--rufous) 45%, transparent); }
+
+/* feedback */
+.feedback { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 28px; align-items: start; }
+@media (max-width: 760px) { .feedback { grid-template-columns: 1fr; } }
+form { display: grid; gap: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; min-width: 0; }
+fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; min-width: 0; }
+legend, label.lbl { font-weight: 600; font-size: 0.95rem; padding: 0; margin-bottom: 4px; }
+.choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.choice { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 0.9rem; background: var(--bg); }
+.choice:has(input:checked) { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); }
+.choice input { accent-color: var(--accent); margin: 0; }
+.rating { display: flex; gap: 6px; }
+.rating .choice { min-width: 44px; justify-content: center; font-family: var(--mono); }
+input[type=text], textarea, select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%; }
+textarea { min-height: 110px; resize: vertical; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+button { font: 600 0.95rem var(--body); border-radius: 8px; padding: 9px 16px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+button.ghost { background: transparent; color: var(--accent); }
+button:disabled { opacity: 0.55; cursor: not-allowed; }
+.status { font-size: 0.9rem; color: var(--muted); }
+.status.ok { color: var(--ok); }
+.status.err { color: var(--rufous); }
+.responses { display: grid; gap: 12px; }
+.resp { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; min-width: 0; }
+.resp .head { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; justify-content: space-between; }
+.resp .who { font-weight: 600; }
+.resp .when { font: 400 0.8rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.resp p { white-space: pre-wrap; overflow-wrap: anywhere; }
+.summary { display: flex; flex-wrap: wrap; gap: 16px; font-variant-numeric: tabular-nums; }
+.summary div { display: grid; }
+.summary b { font: 700 1.4rem var(--display); }
+footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--muted); font-size: 0.85rem; display: grid; gap: 6px; }
+@media (prefers-reduced-motion: no-preference) { .choice { transition: border-color .15s, background .15s; } }
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Companion app · v0.1.0 · draft for feedback</div>
+    <h1>Turnstone Model Hub</h1>
+    <p class="lede">Self-hosted model management for Turnstone. Find the open models worth running, see what your hardware can hold and how fast it will go, download them safely, and hand them to Turnstone as ready-to-use endpoints, all from one local dashboard.</p>
+    <div class="badges" aria-label="Project facts">
+      <span class="badge">license <b>Apache-2.0</b></span>
+      <span class="badge">python <b>3.11+</b></span>
+      <span class="badge">dependencies <b>stdlib only</b></span>
+      <span class="badge">works with <b>Turnstone 1.8</b></span>
+      <span class="badge">platform <b>Windows + WSL 2</b></span>
+    </div>
+    <p class="muted">Turnstone is named after a shorebird that flips stones to see what's underneath. Model Hub does the same for the model landscape: what's new, what's popular and what actually fits, before you spend 80&nbsp;GB of bandwidth finding out.</p>
+    <p class="notice"><strong>Standalone and unofficial.</strong> Model Hub is an independent project. It is not part of, affiliated with, or endorsed by <a href="https://github.com/turnstonelabs">Turnstone Labs</a>, who create and maintain <a href="https://github.com/turnstonelabs/turnstone">Turnstone</a>; all credit for the original system goes to them. Model Hub talks to Turnstone only through the console's public admin API. Anyone is welcome to try it and leave feedback below.</p>
+  </header>
+
+  <section class="section" aria-labelledby="what">
+    <div class="eyebrow">What it does</div>
+    <h2 id="what">Everything on the model side of Turnstone</h2>
+    <div class="features">
+      <div class="feature"><h3>Knows your hardware</h3><p>Detects the GPU on any vendor, unified vs. dedicated memory, live GPU memory use, RAM bandwidth and the memory left for models. Every value shows whether it was detected, derived or assumed.</p></div>
+      <div class="feature"><h3>Plans unified memory</h3><p>On unified-memory APUs (e.g. AMD Ryzen AI Max), shows how the BIOS splits RAM between CPU and GPU and what another split would let you run. Greyed out on GPUs with their own VRAM.</p></div>
+      <div class="feature"><h3>Fit and speed before you download</h3><p>Every GGUF variant with memory needed for your context, a fit verdict, tokens per second and seconds per Turnstone agent turn. One benchmark calibrates the estimates to your machine.</p></div>
+      <div class="feature"><h3>What to run next</h3><p>Newer releases in the families you use, a watchlist (DeepSeek, Kimi, GLM, MiniMax, Qwen, Gemma, Nemotron, gpt-oss) and what's trending on Hugging Face and GitHub.</p></div>
+      <div class="feature"><h3>Safe downloads</h3><p>Hugging Face, ModelScope and GitHub releases. Weights-only formats, allow-listed HTTPS hosts and mandatory SHA-256 checks. Pickle files and executables are refused.</p></div>
+      <div class="feature"><h3>One-step hand-off to Turnstone</h3><p>Starts the llama.cpp server, confirms a Turnstone node can reach it, registers it in the Models tab, and fixes the endpoints when Windows changes the WSL address.</p></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="fit">
+    <div class="eyebrow">How it fits</div>
+    <h2 id="fit">Turnstone calls the models; Model Hub keeps them ready</h2>
+    <p>Turnstone never reads model files. Its nodes call each model's llama.cpp server over HTTP. Model Hub makes sure those servers exist, are reachable from Turnstone's containers, and are registered correctly.</p>
+    <div class="diagram"><pre>
+ Windows host                                         WSL 2 (Docker)
+ ┌──────────────────────────────────────────┐        ┌───────────────────────────────┐
+ │ Model Hub   http://127.0.0.1:8099        │ admin  │ Turnstone console  :8090      │
+ │   discover · estimate · download · verify├───API─▶│   Models tab                  │
+ │   start/stop · benchmark · register      │        │ Turnstone nodes               │
+ │                                          │        │   │ openai-compatible calls   │
+ │ llama-server (Vulkan / ROCm / CUDA) ◀────┼────────┼───┘ http://&lt;WSL addr&gt;:800x   │
+ │   llm/models/*.gguf  (sha256-verified)   │        └───────────────────────────────┘
+ └──────────────────────────────────────────┘</pre></div>
+  </section>
+
+  <section class="section" aria-labelledby="hw">
+    <div class="eyebrow">Hardware support</div>
+    <h2 id="hw">Unified memory gets the planner; everything gets the estimates</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>GPU type</th><th>Memory model used for fit</th><th>RAM split planner</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Unified memory</td><td>BIOS-reserved GPU memory + Windows RAM the GPU may borrow (AMD Ryzen AI / Strix Halo, other APUs, Intel iGPUs)</td><td><span class="tag ok">active</span></td></tr>
+          <tr><td class="name">Dedicated VRAM</td><td>VRAM; overflow modelled as partial CPU offload (NVIDIA, AMD Radeon RX / PRO)</td><td><span class="tag">greyed out</span></td></tr>
+          <tr><td class="name">No GPU</td><td>System RAM, CPU inference</td><td><span class="tag">greyed out</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small"><strong>RAM figures on unified memory are indicative.</strong> CPU and GPU share one pool, and Windows counts it in overlapping buckets that miss some driver allocations, so RAM used/available, GPU memory, the split and &ldquo;fit&rdquo; may not be correct. The dashboard shows this note in the Hardware detection panel; check Task Manager and benchmark before relying on them.</p>
+    <p class="small muted">Test system: one unified-memory mini PC (AMD Ryzen AI Max+ 395, 128&nbsp;GB) with llama.cpp Vulkan. Discrete-GPU and CPU-only configurations are covered by unit tests only.</p>
+  </section>
+
+  <section class="section" aria-labelledby="similar">
+    <div class="eyebrow">Prior art</div>
+    <h2 id="similar">Similar projects on GitHub</h2>
+    <p>Several open-source tools already cover parts of this. None of the ones found targets Turnstone, so the Turnstone hand-off, the Windows + WSL unified-memory planner and per-agent-turn estimates are what Model Hub adds. The fit and speed maths overlaps heavily with llmfit, which is far more mature; reusing it or gguf-parser is an open question below.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Project</th><th>What it does</th><th>Overlap with Model Hub</th></tr></thead>
+        <tbody>
+          <tr><td class="name"><a href="https://github.com/AlexsJones/llmfit">llmfit</a></td><td>Detects CPU/RAM/GPU (incl. unified memory and APUs) and recommends models and quantizations with speed estimates. TUI, CLI and web dashboard. Rust, MIT, ~37.6k stars.</td><td><span class="tag hi">high: fit &amp; speed</span></td></tr>
+          <tr><td class="name"><a href="https://github.com/gpustack/gguf-parser-go">gguf-parser-go</a></td><td>Reads remote GGUF metadata without downloading and estimates memory use and max tokens/s. From the GPUStack team.</td><td><span class="tag hi">high: estimates</span></td></tr>
+          <tr><td class="name"><a href="https://github.com/johan-becker/vramfit">vramfit</a></td><td>"Will this LLM run, and how fast?" GQA/MoE-aware VRAM maths from GGUF files; prints llama.cpp, Ollama and vLLM flags.</td><td><span class="tag warn">medium: estimates</span></td></tr>
+          <tr><td class="name"><a href="https://github.com/berketpbs/llmspec">llmspec</a></td><td>Terminal tool that scores models on quality, speed, fit and context for your machine; can simulate other hardware.</td><td><span class="tag warn">medium: fit, what-if</span></td></tr>
+          <tr><td class="name"><a href="https://github.com/signerless/llm-checker">llm-checker</a></td><td>CLI that scans hardware and recommends models, with Ollama integration.</td><td><span class="tag warn">medium: fit</span></td></tr>
+          <tr><td class="name"><a href="https://github.com/gerbear1990/llama-control-center">Llama Control Center</a></td><td>Local dashboard: GGUF discovery, hardware detection, fit tests, llama.cpp launch parameters, benchmarks, start/stop of tracked servers. Python/FastAPI, MIT.</td><td><span class="tag hi">high: management</span></td></tr>
+          <tr><td class="name"><a href="https://github.com/brantje/LlamaRack">LlamaRack</a></td><td>Self-hosted llama.cpp control plane: Hugging Face downloads, GPU-aware scheduling, autoload/unload, OpenAI-compatible gateway, observability. Go + Nuxt, MIT.</td><td><span class="tag hi">high: management</span></td></tr>
+          <tr><td class="name"><a href="https://github.com/Willebrew/model-manager">model-manager</a></td><td>Memory-aware web dashboard for llama.cpp models on one box (DGX Spark), with out-of-memory guarding before load.</td><td><span class="tag warn">medium: management</span></td></tr>
+          <tr><td class="name"><a href="https://github.com/mkronvold/llama-manager">llama-manager</a></td><td>Terminal UI for llama.cpp: server control, Hugging Face GGUF search and download, live performance view.</td><td><span class="tag warn">medium: management</span></td></tr>
+          <tr><td class="name"><a href="https://github.com/alytaphoenix/llama-switch">llama-switch</a></td><td>One OpenAI-compatible port across engines, with benchmarks, built for unified-memory Strix Halo machines.</td><td><span class="tag">low: serving</span></td></tr>
+          <tr><td class="name">llama-swap, GPUStack</td><td>On-demand model swapping behind one endpoint; GPU cluster orchestration with a web UI.</td><td><span class="tag">low: serving</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted">From a GitHub and web search on 5 October 2026. Star counts are shown only where checked.</p>
+  </section>
+
+  <section class="section" aria-labelledby="try">
+    <div class="eyebrow">Try it</div>
+    <h2 id="try">Run it next to Turnstone</h2>
+    <pre>cd model-hub
+.\run-hub.ps1                 # opens http://127.0.0.1:8099
+.\run-hub.ps1 -Background     # or run hidden; stop with .\stop-hub.ps1</pre>
+    <p class="small muted">Needs Python 3.11+, llama.cpp's <code>llama-server</code>, and Turnstone 1.8+ in WSL 2 for model registration. Discovery, estimates and downloads work without Turnstone.</p>
+  </section>
+
+  <section class="section" aria-labelledby="fb">
+    <div class="eyebrow">Feedback</div>
+    <h2 id="fb">Tell us what would make this useful</h2>
+    <div class="feedback">
+      <div class="section">
+        <p>A few quick questions. Your answers are stored with this page and only its owner can read them. You can come back and change yours.</p>
+        <p class="small muted">Questions we most want answered: would you rather see this as a native Models view inside the Turnstone console? Should the fit and speed maths reuse llmfit or gguf-parser instead of its own? Does it work on your GPU?</p>
+        <div id="owner-view" hidden>
+          <h3>Responses</h3>
+          <div id="summary" class="summary small"></div>
+          <div id="responses" class="responses"></div>
+        </div>
+      </div>
+
+      <form id="fb-form" novalidate>
+        <fieldset>
+          <legend>Overall, how useful does this look?</legend>
+          <div class="rating" role="radiogroup" aria-label="Usefulness from 1 to 5">
+            <label class="choice"><input type="radio" name="rating" value="1" id="r1">1</label>
+            <label class="choice"><input type="radio" name="rating" value="2" id="r2">2</label>
+            <label class="choice"><input type="radio" name="rating" value="3" id="r3">3</label>
+            <label class="choice"><input type="radio" name="rating" value="4" id="r4">4</label>
+            <label class="choice"><input type="radio" name="rating" value="5" id="r5">5</label>
+          </div>
+          <span class="small muted">1 = not for me · 5 = I'd use it now</span>
+        </fieldset>
+
+        <fieldset>
+          <legend>Which parts matter to you?</legend>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="parts" value="fit" id="p-fit">Fit &amp; speed estimates</label>
+            <label class="choice"><input type="checkbox" name="parts" value="planner" id="p-planner">Unified-memory planner</label>
+            <label class="choice"><input type="checkbox" name="parts" value="discovery" id="p-discovery">New &amp; popular models</label>
+            <label class="choice"><input type="checkbox" name="parts" value="downloads" id="p-downloads">Safe downloads</label>
+            <label class="choice"><input type="checkbox" name="parts" value="turnstone" id="p-turnstone">Turnstone registration</label>
+            <label class="choice"><input type="checkbox" name="parts" value="monitor" id="p-monitor">Resource monitoring</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Where should it live?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="home" value="standalone" id="h-standalone">Standalone app</label>
+            <label class="choice"><input type="radio" name="home" value="native" id="h-native">Native tab in Turnstone</label>
+            <label class="choice"><input type="radio" name="home" value="either" id="h-either">Either is fine</label>
+          </div>
+        </fieldset>
+
+        <div class="section" style="gap:6px">
+          <label class="lbl" for="hardware">Your hardware (optional)</label>
+          <input type="text" id="hardware" name="hardware" maxlength="160" placeholder="e.g. RTX 4090 24 GB + 64 GB DDR5, or Ryzen AI Max+ 395 128 GB">
+        </div>
+
+        <div class="section" style="gap:6px">
+          <label class="lbl" for="comments">Anything else?</label>
+          <textarea id="comments" name="comments" maxlength="4000" placeholder="What's missing, what's confusing, what you'd use instead"></textarea>
+        </div>
+
+        <div class="actions">
+          <button type="submit" id="submit">Send feedback</button>
+          <button type="button" class="ghost" id="copy" hidden>Copy my answers</button>
+          <span id="status" class="status" role="status"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <span>Turnstone Model Hub · Apache-2.0 · an independent companion to <a href="https://github.com/turnstonelabs/turnstone">Turnstone</a>.</span>
+    <span>Credits: <a href="https://github.com/turnstonelabs/turnstone">Turnstone</a> is created and maintained by <a href="https://github.com/turnstonelabs">Turnstone Labs</a>; Model Hub is not affiliated with or endorsed by them. Model servers by <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a>. Model names and trademarks belong to their owners.</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  const form = document.getElementById("fb-form");
+  const statusEl = document.getElementById("status");
+  const submitBtn = document.getElementById("submit");
+  const copyBtn = document.getElementById("copy");
+  const PART_LABELS = { fit: "Fit & speed", planner: "Unified-memory planner", discovery: "New & popular", downloads: "Safe downloads", turnstone: "Turnstone registration", monitor: "Monitoring" };
+  const HOME_LABELS = { standalone: "Standalone", native: "Native tab", either: "Either" };
+  let db = null, user = null, myId = null, saving = false;
+
+  function setStatus(text, kind) { statusEl.textContent = text; statusEl.className = "status" + (kind ? " " + kind : ""); }
+
+  function readForm() {
+    const fd = new FormData(form);
+    return {
+      rating: fd.get("rating") ? Number(fd.get("rating")) : null,
+      parts: fd.getAll("parts"),
+      home: fd.get("home") || null,
+      hardware: String(fd.get("hardware") || "").trim().slice(0, 160),
+      comments: String(fd.get("comments") || "").trim().slice(0, 4000),
+    };
+  }
+
+  function fillForm(d) {
+    if (!d) return;
+    if (d.rating) { const r = document.getElementById("r" + d.rating); if (r) r.checked = true; }
+    (d.parts || []).forEach((p) => { const c = document.getElementById("p-" + p); if (c) c.checked = true; });
+    if (d.home) { const h = document.getElementById("h-" + d.home); if (h) h.checked = true; }
+    if (d.hardware) document.getElementById("hardware").value = d.hardware;
+    if (d.comments) document.getElementById("comments").value = d.comments;
+  }
+
+  function asText(d) {
+    return [
+      "Turnstone Model Hub feedback",
+      "Usefulness: " + (d.rating || "-") + "/5",
+      "Matters: " + (d.parts.map((p) => PART_LABELS[p]).join(", ") || "-"),
+      "Where: " + (HOME_LABELS[d.home] || "-"),
+      "Hardware: " + (d.hardware || "-"),
+      "Comments: " + (d.comments || "-"),
+    ].join("\n");
+  }
+
+  function fallback(reason) {
+    // No shared store for this viewer: keep the form usable and offer the answers as text.
+    submitBtn.disabled = true;
+    copyBtn.hidden = false;
+    setStatus(reason, "err");
+  }
+
+  copyBtn.addEventListener("click", async () => {
+    const text = asText(readForm());
+    try { await navigator.clipboard.writeText(text); setStatus("Copied. Paste it wherever you share feedback.", "ok"); }
+    catch (_) {
+      const ta = document.getElementById("comments");
+      ta.value = text; ta.focus(); ta.select();
+      setStatus("Copy is blocked here; your answers are selected in the box above.", "err");
+    }
+  });
+
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    if (saving) return;
+    const d = readForm();
+    if (!d.rating && !d.comments && !d.parts.length) { setStatus("Pick a rating or write a comment first.", "err"); return; }
+    if (!db || !myId) { fallback("Saving needs you to be signed in with Contributor access to this page. You can copy your answers instead."); return; }
+    saving = true; submitBtn.disabled = true; setStatus("Sending…");
+    try {
+      await db.doc("feedback/" + myId).set({ ...d, by: myId, updatedAt: Date.now() });
+      setStatus("Thanks, your feedback is saved. You can change it any time.", "ok");
+      submitBtn.textContent = "Update feedback";
+    } catch (e) {
+      const code = e && e.code;
+      if (code === "invalid_argument") fallback("This page lets you read but not save. Ask the owner for Contributor access, or copy your answers.");
+      else if (code === "quota_exceeded") setStatus("The feedback store is full. Please copy your answers and send them another way.", "err");
+      else setStatus("Couldn't save just now. Try again in a moment.", "err");
+    } finally { saving = false; if (!copyBtn.hidden) return; submitBtn.disabled = false; }
+  });
+
+  async function renderOwner(snap) {
+    const box = document.getElementById("responses");
+    const docs = snap.docs.map((s) => s.data()).filter(Boolean);
+    const ids = docs.map((d) => d.by).filter(Boolean);
+    const ps = ids.length ? await user.profiles(ids) : {};
+    const ratings = docs.map((d) => d.rating).filter(Boolean);
+    const homes = docs.reduce((a, d) => { if (d.home) a[d.home] = (a[d.home] || 0) + 1; return a; }, {});
+    const sum = document.getElementById("summary");
+    sum.replaceChildren(
+      stat(docs.length, "responses"),
+      stat(ratings.length ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1) : "–", "avg usefulness"),
+      stat(homes.native || 0, "want native tab"),
+      stat(homes.standalone || 0, "want standalone"));
+    if (!docs.length) {
+      const p = document.createElement("p"); p.className = "muted small";
+      p.textContent = "No responses yet. Share this page with Contributor access so people can answer.";
+      box.replaceChildren(p); return;
+    }
+    box.replaceChildren(...docs.map((d) => {
+      const card = document.createElement("article"); card.className = "resp";
+      const head = document.createElement("div"); head.className = "head";
+      const who = document.createElement("span"); who.className = "who";
+      who.textContent = ((ps[d.by] && ps[d.by].name) || "Someone") + (d.rating ? " · " + d.rating + "/5" : "");
+      const when = document.createElement("span"); when.className = "when";
+      when.textContent = d.updatedAt ? new Date(d.updatedAt).toISOString().slice(0, 16).replace("T", " ") : "";
+      head.append(who, when);
+      const meta = document.createElement("div"); meta.className = "small muted";
+      meta.textContent = [(d.parts || []).map((p) => PART_LABELS[p] || p).join(", "), HOME_LABELS[d.home], d.hardware].filter(Boolean).join(" · ");
+      card.append(head, meta);
+      if (d.comments) { const c = document.createElement("p"); c.textContent = d.comments; card.append(c); }
+      return card;
+    }));
+  }
+
+  function stat(v, label) {
+    const div = document.createElement("div");
+    const b = document.createElement("b"); b.textContent = String(v);
+    const s = document.createElement("span"); s.className = "muted"; s.textContent = label;
+    div.append(b, s); return div;
+  }
+
+  (async () => {
+    if (!window.claude || !window.claude.use) { fallback("Feedback saving works when this page is opened in Claude. You can copy your answers instead."); return; }
+    [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
+    if (!db || !user) { fallback("Saving needs you to be signed in. You can copy your answers instead."); return; }
+    myId = await user.id();
+    if (!myId) { fallback("Saving needs a signed-in account. You can copy your answers instead."); return; }
+    try {
+      const mine = await db.doc("feedback/" + myId).get();
+      if (mine.exists) { fillForm(mine.data()); submitBtn.textContent = "Update feedback"; setStatus("Your earlier feedback is loaded; edit and update it.", ""); }
+    } catch (_) { /* reading own feedback is optional */ }
+    if (await user.isOwner()) {
+      document.getElementById("owner-view").hidden = false;
+      db.collection("feedback").orderBy("updatedAt", "desc").onSnapshot(renderOwner, () => {
+        document.getElementById("responses").textContent = "Responses couldn't be loaded right now.";
+      });
+    }
+  })();
+})();
+</script>

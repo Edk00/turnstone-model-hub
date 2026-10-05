@@ -1,0 +1,44 @@
+{
+  "_comment": "Model families Model Hub tracks. 'author' is the Hugging Face org that publishes originals; 'match' is a regex on the repo name used to find newer releases (successors). 'exclude' drops variants that are not useful for llama.cpp. Edit freely.",
+  "exclude": "(?i)(-base$|-base-|-bf16$|fp8|fp4|nvfp4|mxfp4$|awq|gptq|int4|int8|w4a16|w8a8|-ct$|-mlx|onnx|-eagle|-assistant$|-original|paddle|-tp\\d|embedding|reranker|guard|safety|reward|-vl$|-vl-|vision|audio|music|speech|diarization|-tts|-asr|-mt\\b|labs|math|-rl$|-sft$|-mopd$|-q\\d_\\d$|unquantized|-dflash$|singprobe)",
+  "families": [
+    { "id": "gpt-oss",   "label": "OpenAI gpt-oss",        "author": "openai",       "match": "(?i)^gpt-oss" },
+    { "id": "qwen",      "label": "Qwen",                  "author": "Qwen",         "match": "(?i)^qwen[3-9]" },
+    { "id": "gemma",     "label": "Google Gemma",          "author": "google",       "match": "(?i)^gemma-[3-9]" },
+    { "id": "nemotron",  "label": "NVIDIA Nemotron",       "author": "nvidia",       "match": "(?i)nemotron-[3-9]" },
+    { "id": "deepseek",  "label": "DeepSeek",              "author": "deepseek-ai",  "match": "(?i)^deepseek-(v[3-9]|r[1-9])" },
+    { "id": "kimi",      "label": "Moonshot Kimi",         "author": "moonshotai",   "match": "(?i)^kimi" },
+    { "id": "glm",       "label": "Z.ai GLM",              "author": "zai-org",      "match": "(?i)^glm-[4-9]" },
+    { "id": "minimax",   "label": "MiniMax",               "author": "MiniMaxAI",    "match": "(?i)^minimax-m" },
+    { "id": "mistral",   "label": "Mistral",               "author": "mistralai",    "match": "(?i)^(mistral|magistral|devstral|ministral)" },
+    { "id": "llama",     "label": "Meta Llama",            "author": "meta-llama",   "match": "(?i)^llama-[3-9]" },
+    { "id": "phi",       "label": "Microsoft Phi",         "author": "microsoft",    "match": "(?i)^phi-[4-9]" },
+    { "id": "granite",   "label": "IBM Granite",           "author": "ibm-granite",  "match": "(?i)^granite-[4-9]" },
+    { "id": "olmo",      "label": "AllenAI OLMo",          "author": "allenai",      "match": "(?i)^olmo-[3-9]" },
+    { "id": "ernie",     "label": "Baidu ERNIE",           "author": "baidu",        "match": "(?i)^ernie-[4-9]" },
+    { "id": "hunyuan",   "label": "Tencent Hunyuan / Hy",  "author": "tencent",      "match": "(?i)^(hunyuan|hy[3-9])" },
+    { "id": "step",      "label": "StepFun Step",          "author": "stepfun-ai",   "match": "(?i)^step-?[3-9]" },
+    { "id": "mimo",      "label": "Xiaomi MiMo",           "author": "XiaomiMiMo",   "match": "(?i)^mimo" },
+    { "id": "ling",      "label": "inclusionAI Ling",      "author": "inclusionAI",  "match": "(?i)^ling-" },
+    { "id": "lfm",       "label": "Liquid LFM",            "author": "LiquidAI",     "match": "(?i)^lfm[2-9]" }
+  ],
+  "candidates": {
+    "_comment": "Notable open models to evaluate. Fit and speed are computed live against your hardware; this list only says what to look at.",
+    "models": [
+      { "base": "deepseek-ai/DeepSeek-V4-Flash-0731",       "family": "deepseek", "note": "DeepSeek's newest open MoE; ~300B total, ~2-bit quant needs ~90 GB." },
+      { "base": "deepseek-ai/DeepSeek-V3.2",                "family": "deepseek", "note": "685B; beyond single-PC memory at any usable quant." },
+      { "base": "moonshotai/Kimi-K2-Thinking",              "family": "kimi",     "note": "1T parameters; beyond single-PC memory." },
+      { "base": "moonshotai/Kimi-Linear-48B-A3B-Instruct",  "family": "kimi",     "note": "Kimi's small hybrid-attention MoE; check llama.cpp support of the GGUF." },
+      { "base": "zai-org/GLM-4.7-Flash",                    "family": "glm",      "note": "31B; strong coder/agent, ~19 GB at 4-bit." },
+      { "base": "zai-org/GLM-4.5-Air",                      "family": "glm",      "note": "110B MoE (12B active); ~65 GB at 4-bit." },
+      { "base": "zai-org/GLM-5.3",                          "family": "glm",      "note": "753B; beyond single-PC memory." },
+      { "base": "MiniMaxAI/MiniMax-M2.7",                   "family": "minimax",  "note": "229B MoE (~10B active); ~95 GB at ~3-bit." },
+      { "base": "stepfun-ai/Step-3.5-Flash",                "family": "step",     "note": "199B MoE; ~85 GB at ~3-bit." },
+      { "base": "inclusionAI/Ling-3.0-flash",               "family": "ling",     "note": "127B MoE; ~75 GB at 4-bit." },
+      { "base": "tencent/Hunyuan-A13B-Instruct",            "family": "hunyuan",  "note": "80B MoE (13B active); ~48 GB at 4-bit." },
+      { "base": "baidu/ERNIE-4.5-21B-A3B-Thinking",         "family": "ernie",    "note": "21B MoE reasoning model; small and fast." },
+      { "base": "ibm-granite/granite-4.1-30b",              "family": "granite",  "note": "30B dense, enterprise-oriented, tool calling." },
+      { "base": "XiaomiMiMo/MiMo-V2.5",                     "family": "mimo",     "note": "311B MoE; too large except at very low quant." }
+    ]
+  }
+}

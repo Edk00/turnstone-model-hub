@@ -1,0 +1,10 @@
+{
+  "_comment": "Cloud model prices for the estimator, in USD per 1 million tokens. Fill these in from your provider's current price page; Model Hub never guesses prices (null = not shown). Local models cost only electricity: set local_power_watts and electricity_per_kwh to estimate it.",
+  "currency": "USD",
+  "local_power_watts": 140,
+  "electricity_per_kwh": null,
+  "cloud": [
+    { "alias": "claude", "provider": "anthropic", "model": "claude-sonnet-5-5", "input_per_mtok": null, "output_per_mtok": null, "tokens_per_second": null },
+    { "alias": "claude-opus", "provider": "anthropic", "model": "claude-opus-5-5", "input_per_mtok": null, "output_per_mtok": null, "tokens_per_second": null }
+  ]
+}

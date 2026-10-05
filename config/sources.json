@@ -1,0 +1,37 @@
+{
+  "_comment": "Model sources Model Hub may search and download from. 'trust' is one of: trusted (built-in registry), reviewed (added by you after a safety check), blocked. Only https sources whose host matches 'hosts' are used. See docs/SECURITY.md.",
+  "sources": [
+    {
+      "id": "huggingface",
+      "name": "Hugging Face",
+      "kind": "huggingface",
+      "base_url": "https://huggingface.co",
+      "hosts": ["huggingface.co", "*.huggingface.co", "*.hf.co"],
+      "trust": "trusted",
+      "checksum": "SHA-256 from the repository's LFS metadata"
+    },
+    {
+      "id": "github",
+      "name": "GitHub releases",
+      "kind": "github",
+      "base_url": "https://github.com",
+      "hosts": ["github.com", "api.github.com", "*.githubusercontent.com"],
+      "trust": "trusted",
+      "checksum": "SHA-256 'digest' published with each release asset"
+    },
+    {
+      "id": "modelscope",
+      "name": "ModelScope",
+      "kind": "modelscope",
+      "base_url": "https://www.modelscope.cn",
+      "hosts": ["modelscope.cn", "*.modelscope.cn"],
+      "trust": "reviewed",
+      "checksum": "SHA-256 from the repository file listing"
+    }
+  ],
+  "trusted_publishers": {
+    "_comment": "Hugging Face / GitHub owners treated as official or well-known quantizers. Anything else is shown as 'community'.",
+    "official": ["openai", "google", "Qwen", "deepseek-ai", "moonshotai", "zai-org", "MiniMaxAI", "mistralai", "meta-llama", "microsoft", "nvidia", "ibm-granite", "allenai", "baidu", "tencent", "stepfun-ai", "XiaomiMiMo", "inclusionAI", "LiquidAI"],
+    "quantizers": ["ggml-org", "unsloth", "bartowski", "lmstudio-community", "mradermacher"]
+  }
+}

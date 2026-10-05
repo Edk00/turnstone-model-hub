@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+logs/
+dist/
+config/turnstone.token
+*.tmp

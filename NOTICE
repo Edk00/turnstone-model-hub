@@ -1,0 +1,11 @@
+Turnstone Model Hub
+Copyright 2026 The Model Hub contributors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It is a companion tool for Turnstone (https://github.com/turnstonelabs/turnstone),
+which is separately licensed under the Apache License, Version 2.0. Model Hub does
+not include Turnstone code; it talks to Turnstone's console over its HTTP API.
+
+Model Hub downloads third-party model files at the user's request. Each model is
+subject to its own licence, shown in the dashboard; check it before use.

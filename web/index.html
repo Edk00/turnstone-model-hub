@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Turnstone Model Hub</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <h1>Model Hub</h1>
+      <span class="sub">for Turnstone</span>
+    </div>
+    <div class="top-actions">
+      <span id="updated" class="muted"></span>
+      <button id="refresh" class="ghost" title="Refresh everything">Refresh</button>
+    </div>
+  </header>
+
+  <!-- 1. System resources (always visible) -->
+  <form id="monitor-bar" class="monitor-bar" aria-label="Resource monitoring">
+    <label>Monitoring
+      <select id="mon-mode">
+        <option value="continuous">Continuous (until stopped)</option>
+        <option value="duration">For a set duration</option>
+        <option value="average">Average over a set duration</option>
+        <option value="stopped">Stopped</option>
+      </select>
+    </label>
+    <label id="mon-dur-wrap">for <input id="mon-dur" type="number" min="5" max="86400" value="5" aria-label="Duration">
+      <select id="mon-unit" aria-label="Duration unit"><option value="1">seconds</option><option value="60" selected>minutes</option><option value="3600">hours</option></select>
+    </label>
+    <label>every <input id="mon-int" type="number" min="1" max="60" value="5" aria-label="Sample interval in seconds"> s</label>
+    <button id="mon-start" type="submit">Start</button>
+    <button id="mon-stop" type="button" class="ghost">Stop</button>
+    <span id="mon-status" class="muted"></span>
+  </form>
+  <section id="resources" class="resources" aria-label="System resources">
+    <div class="loading">Reading system resources...</div>
+  </section>
+  <section id="mon-stats" class="mon-stats hidden" aria-label="Monitoring statistics"></section>
+  <details id="hw-details" class="hw-details">
+    <summary id="hw-summary">Hardware detection (what was detected, derived or assumed)</summary>
+    <div id="hw-body" class="muted">Loading...</div>
+  </details>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="installed" class="active">Installed</button>
+    <button role="tab" data-tab="successors">Newer versions</button>
+    <button role="tab" data-tab="popular">Popular</button>
+    <button role="tab" data-tab="watchlist">Watchlist</button>
+    <button role="tab" data-tab="search">Search &amp; download</button>
+    <button role="tab" data-tab="estimator">Estimator</button>
+    <button role="tab" data-tab="sources">Sources</button>
+    <button role="tab" data-tab="downloads">Downloads <span id="dl-badge" class="badge hidden"></span></button>
+    <button role="tab" data-tab="export">Export</button>
+  </nav>
+
+  <main>
+    <section id="tab-installed" class="tab active">
+      <div class="section-head">
+        <h2>Installed models</h2>
+        <p class="muted">Local GGUF models from <code>llm/models.json</code>. Start or stop servers, benchmark speed, and register them in Turnstone.</p>
+      </div>
+      <div id="installed" class="loading">Loading...</div>
+    </section>
+
+    <section id="tab-successors" class="tab">
+      <div class="section-head">
+        <h2>Newer versions</h2>
+        <p class="muted">Releases from the same publishers that are newer than the models you have, plus the latest from families you don't have yet.</p>
+      </div>
+      <div id="successors" class="empty">Open this tab to check Hugging Face.</div>
+    </section>
+
+    <section id="tab-popular" class="tab">
+      <div class="section-head">
+        <h2>Popular</h2>
+        <p class="muted">What people are using now: Hugging Face trending and most-downloaded GGUF models, and rising GitHub projects.</p>
+      </div>
+      <div id="popular" class="empty">Open this tab to load.</div>
+    </section>
+
+    <section id="tab-watchlist" class="tab">
+      <div class="section-head">
+        <h2>Watchlist</h2>
+        <p class="muted">Notable open models (DeepSeek, Kimi, GLM, MiniMax and others) with the best GGUF that fits this PC. Edit <code>config/watchlist.json</code> to change the list.</p>
+      </div>
+      <div id="watchlist" class="empty">Open this tab to evaluate.</div>
+    </section>
+
+    <section id="tab-search" class="tab">
+      <div class="section-head">
+        <h2>Search &amp; download</h2>
+        <p class="muted">Search a source, open a repository to see every file variant with size, fit and speed, then download. Files are checksum-verified.</p>
+      </div>
+      <form id="search-form" class="row">
+        <select id="search-source" aria-label="Source">
+          <option value="huggingface">Hugging Face</option>
+          <option value="modelscope">ModelScope</option>
+          <option value="github">GitHub</option>
+        </select>
+        <input id="search-q" type="search" placeholder="e.g. qwen3.8 27b, deepseek v4, glm-4.7" required>
+        <label class="check"><input id="search-gguf" type="checkbox" checked> GGUF only</label>
+        <button type="submit">Search</button>
+      </form>
+      <form id="open-form" class="row">
+        <input id="open-repo" placeholder="or open a repository directly: owner/name" pattern="[\w.\-]+/[\w.\-]+">
+        <button type="submit" class="ghost">Open</button>
+      </form>
+      <div id="search-results"></div>
+      <div id="repo-detail"></div>
+    </section>
+
+    <section id="tab-estimator" class="tab">
+      <div class="section-head">
+        <h2>Estimator</h2>
+        <p class="muted">What each model costs to run in Turnstone on this PC: memory, speed and time per agent turn. Cloud rows use prices you set in <code>config/pricing.json</code>.</p>
+      </div>
+      <div id="estimator" class="empty">Open this tab to calculate.</div>
+    </section>
+
+    <section id="tab-sources" class="tab">
+      <div class="section-head">
+        <h2>Model sources</h2>
+        <p class="muted">Where Model Hub may search and download. New sources must pass safety checks before they are added.</p>
+      </div>
+      <div id="sources"></div>
+      <h3>Check a new source or file URL</h3>
+      <form id="source-form" class="row">
+        <input id="source-url" type="url" placeholder="https://example.org/models/model.gguf" required>
+        <input id="source-name" placeholder="Name (optional)">
+        <button type="submit">Check</button>
+      </form>
+      <div id="source-result"></div>
+    </section>
+
+    <section id="tab-downloads" class="tab">
+      <div class="section-head">
+        <h2>Downloads</h2>
+        <p class="muted">Queued and finished downloads. Partial files resume automatically.</p>
+      </div>
+      <div id="downloads" class="empty">No downloads yet.</div>
+    </section>
+
+    <section id="tab-export" class="tab">
+      <div class="section-head">
+        <h2>Export</h2>
+        <p class="muted">Save the dashboard's current state. "Full" also includes the watchlist and newer-version results (slower).</p>
+      </div>
+      <div class="export-grid">
+        <a class="button" href="/api/export.html">HTML report</a>
+        <a class="button" href="/api/export.html?full=1">HTML report (full)</a>
+        <a class="button ghost" href="/api/export.csv">CSV model table</a>
+        <a class="button ghost" href="/api/export.csv?full=1">CSV (full)</a>
+        <a class="button ghost" href="/api/export.json" download="model-hub.json">JSON snapshot</a>
+        <a class="button ghost" href="/api/export.json?full=1" download="model-hub-full.json">JSON (full)</a>
+      </div>
+      <p class="muted">The dashboard's source code, documentation and licence live in the <code>model-hub</code> folder; run <code>package.ps1</code> to zip it for sharing.</p>
+    </section>
+  </main>
+
+  <dialog id="dialog">
+    <form method="dialog">
+      <h3 id="dialog-title"></h3>
+      <div id="dialog-body"></div>
+      <menu><button value="cancel" class="ghost">Close</button><button id="dialog-ok" value="ok" class="hidden">OK</button></menu>
+    </form>
+  </dialog>
+  <div id="toast" class="toast hidden" role="status"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
