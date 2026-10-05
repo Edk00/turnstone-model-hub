@@ -23,8 +23,7 @@ what's new, what's popular, what actually fits — before you spend 80 GB of ban
 > [!IMPORTANT]
 > **Standalone, unofficial companion.** Model Hub is an independent project. It is **not** part of,
 > affiliated with, or endorsed by [Turnstone Labs](https://github.com/turnstonelabs). Turnstone itself
-> is created and maintained by Turnstone Labs; all credit for Turnstone goes to them (see
-> [Credits](#credits)). Model Hub talks to Turnstone only through Turnstone's public console API.
+> is created and maintained by Edk00. Model Hub talks to Turnstone only through Turnstone's public console API.
 >
 > You're welcome to try it and share feedback: [open an issue](../../issues) with what worked, what
 > didn't and your hardware.
