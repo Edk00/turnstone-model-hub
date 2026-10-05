@@ -7,10 +7,9 @@ Edit freely before posting.*
 
 ## Model Hub: a companion for running Turnstone on your own models
 
-> **Standalone and unofficial.** Model Hub is an independent community project. It is not part of,
-> affiliated with, or endorsed by [Turnstone Labs](https://github.com/turnstonelabs).
-> [Turnstone](https://github.com/turnstonelabs/turnstone) is created and maintained by Turnstone Labs,
-> and all credit for the original system goes to them.
+> **Standalone and unofficial.** Model Hub is an independent community project. It is not created,
+> maintained or endorsed by [Turnstone Labs](https://github.com/turnstonelabs), and is not part of or
+> affiliated with [Turnstone](https://github.com/turnstonelabs/turnstone).
 
 Turnstone is built around a simple promise: your agents, your models, your hardware. The "your
 models" part is where most of us spend the most time — which model to run, which quantization, will
@@ -40,7 +39,7 @@ on the machine that hosts your models and talks to Turnstone only through the co
 
 ### What it isn't
 
-- Not part of Turnstone, and not affiliated with or endorsed by Turnstone Labs — an independent
+- Not part of Turnstone, and not created, maintained or endorsed by Turnstone Labs — an independent
   companion that uses Turnstone's public API.
 - Not a model server — it drives [llama.cpp](https://github.com/ggml-org/llama.cpp)'s `llama-server`.
 - Not a cloud service — nothing leaves your machine except requests to the model registries you
@@ -81,6 +80,6 @@ Turnstone, its console API and its installer are the work of
 > hardware can run (incl. a unified-memory planner for APUs), estimates fit and
 > tokens/s per GGUF before you download, tracks new releases (DeepSeek, Kimi, GLM, Qwen, Gemma…),
 > downloads with SHA-256 checks, and registers the model in Turnstone's console in one step.
-> Apache-2.0, stdlib-only Python. Standalone and unofficial: not affiliated with Turnstone Labs, who
-> make Turnstone (https://github.com/turnstonelabs/turnstone). Try it and send feedback:
+> Apache-2.0, stdlib-only Python. Standalone and unofficial: not created, maintained or endorsed by
+> Turnstone Labs (makers of Turnstone, https://github.com/turnstonelabs/turnstone). Try it and send feedback:
 > https://github.com/Edk00/turnstone-model-hub/issues

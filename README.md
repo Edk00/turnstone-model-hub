@@ -21,8 +21,9 @@ Turnstone flips stones to see what's underneath. Model Hub does the same for the
 what's new, what's popular, what actually fits — before you spend 80 GB of bandwidth finding out.
 
 > [!IMPORTANT]
-> **Standalone, unofficial companion.** Model Hub is an independent project. It is **not** part of,
-> affiliated with, or endorsed by [Turnstone Labs](https://github.com/turnstonelabs). Model Hub talks to Turnstone only through Turnstone's public console API.
+> **Standalone, unofficial companion.** Model Hub is an independent project. It is **not** created,
+> maintained or endorsed by [Turnstone Labs](https://github.com/turnstonelabs), and is not part of or
+> affiliated with Turnstone. Model Hub talks to Turnstone only through Turnstone's public console API.
 >
 > You're welcome to try it and share feedback: [open an issue](../../issues) with what worked, what
 > didn't and your hardware.
@@ -185,7 +186,7 @@ variant recommendation, hardware classification across GPU types, file-type and 
 ## Disclaimer
 
 Model Hub is a standalone, community project provided "as is" under the Apache-2.0 licence, without
-warranty. It is not affiliated with, endorsed by or supported by Turnstone Labs; "Turnstone" refers to
+warranty. It is not created, maintained, endorsed or supported by Turnstone Labs, nor affiliated with them; "Turnstone" refers to
 their project and is used only to describe compatibility. Hardware figures and estimates are
 indicative (see [docs/ASSUMPTIONS.md](docs/ASSUMPTIONS.md)); the dashboard image above is for
 reference only.
